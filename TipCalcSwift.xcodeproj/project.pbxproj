@@ -405,6 +405,7 @@
 				7B8269D91A47902600832B2B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7B8269DA1A47902600832B2B /* Build configuration list for PBXNativeTarget "TipCalcSwiftTests" */ = {
 			isa = XCConfigurationList;
@@ -413,6 +414,7 @@
 				7B8269DC1A47902600832B2B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
