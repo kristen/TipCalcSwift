@@ -24,6 +24,10 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        billField.center = CGPointMake(160, 188)
+        tipControl.center = CGPointMake(160, 249.5)
+        dollarSignLabel.center = CGPointMake(287, 188)
+        
         tipControl.alpha = 0
         tipLabel.alpha = 0
         totalLabel.alpha = 0
@@ -42,10 +46,13 @@ class ViewController: UIViewController {
     
     @IBAction func onEditingChange(sender: AnyObject) {
         
-        let duration = 0.5
+        let duration = 0.35
+        let delay = 0.0 // delay will be 0.0 seconds (e.g. nothing)
+        let options = UIViewAnimationOptions.CurveEaseInOut // change the timing curve to `ease-in ease-out`
+        
         
         if billField.text.isEmpty {
-            self.dollarSignLabel.alpha = 1
+            
             
             UIView.animateWithDuration(duration, animations: { () -> Void in
                 self.tipControl.alpha = 0
@@ -57,7 +64,19 @@ class ViewController: UIViewController {
                 self.forthTotalLabel.alpha = 0
                 self.backgroundColorView.alpha = 0
                 self.peopleLabelCollection.map { $0.alpha = 0 }
+                self.dollarSignLabel.alpha = 1
             })
+            
+            UIView.animateWithDuration(duration, delay: delay, options: options, animations: {
+                self.billField.center = CGPointMake(160, 188)
+                self.tipControl.center = CGPointMake(160, 249.5)
+                self.dollarSignLabel.center = CGPointMake(287, 188)
+                
+                }, completion: { finished in
+                    // any code entered here will be applied
+                    // once the animation has completed
+            })
+            
         } else {
             self.dollarSignLabel.alpha = 0
             
@@ -72,9 +91,17 @@ class ViewController: UIViewController {
                 self.backgroundColorView.alpha = 1
                 self.peopleLabelCollection.map { $0.alpha = 1 }
             })
+            
+            UIView.animateWithDuration(duration, delay: delay, options: options, animations: {
+                self.billField.center = CGPointMake(160, 117)
+                self.tipControl.center = CGPointMake(160, 171.5)
+                self.dollarSignLabel.center = CGPointMake(287, 117)
+                
+                }, completion: { finished in
+                    // any code entered here will be applied
+                    // once the animation has completed
+            })
         }
-        
-        
         
         
         let tipPercentages = [0.15, 0.18, 0.2]
