@@ -18,7 +18,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var thirdTotalLabel: UILabel!
     @IBOutlet weak var forthTotalLabel: UILabel!
     @IBOutlet weak var dollarSignLabel: UILabel!
-    
     @IBOutlet weak var backgroundColorView: UIView!
     @IBOutlet var peopleLabelCollection: [UILabel]!
     
@@ -42,19 +41,40 @@ class ViewController: UIViewController {
     }
     
     @IBAction func onEditingChange(sender: AnyObject) {
-        self.dollarSignLabel.alpha = 0
         
-        UIView.animateWithDuration(0.5, animations: { () -> Void in
-            self.tipControl.alpha = 1
-            self.tipLabel.alpha = 1
-            self.totalLabel.alpha = 1
-            self.tipControl.alpha = 1
-            self.halfTotalLabel.alpha = 1
-            self.thirdTotalLabel.alpha = 1
-            self.forthTotalLabel.alpha = 1
-            self.backgroundColorView.alpha = 1
-            self.peopleLabelCollection.map { $0.alpha = 1 }
-        })
+        let duration = 0.5
+        
+        if billField.text.isEmpty {
+            self.dollarSignLabel.alpha = 1
+            
+            UIView.animateWithDuration(duration, animations: { () -> Void in
+                self.tipControl.alpha = 0
+                self.tipLabel.alpha = 0
+                self.totalLabel.alpha = 0
+                self.tipControl.alpha = 0
+                self.halfTotalLabel.alpha = 0
+                self.thirdTotalLabel.alpha = 0
+                self.forthTotalLabel.alpha = 0
+                self.backgroundColorView.alpha = 0
+                self.peopleLabelCollection.map { $0.alpha = 0 }
+            })
+        } else {
+            self.dollarSignLabel.alpha = 0
+            
+            UIView.animateWithDuration(duration, animations: { () -> Void in
+                self.tipControl.alpha = 1
+                self.tipLabel.alpha = 1
+                self.totalLabel.alpha = 1
+                self.tipControl.alpha = 1
+                self.halfTotalLabel.alpha = 1
+                self.thirdTotalLabel.alpha = 1
+                self.forthTotalLabel.alpha = 1
+                self.backgroundColorView.alpha = 1
+                self.peopleLabelCollection.map { $0.alpha = 1 }
+            })
+        }
+        
+        
         
         
         let tipPercentages = [0.15, 0.18, 0.2]
