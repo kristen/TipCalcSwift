@@ -17,10 +17,23 @@ class ViewController: UIViewController {
     @IBOutlet weak var halfTotalLabel: UILabel!
     @IBOutlet weak var thirdTotalLabel: UILabel!
     @IBOutlet weak var forthTotalLabel: UILabel!
+    @IBOutlet weak var dollarSignLabel: UILabel!
+    
+    @IBOutlet weak var backgroundColorView: UIView!
+    @IBOutlet var peopleLabelCollection: [UILabel]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        tipControl.alpha = 0
+        tipLabel.alpha = 0
+        totalLabel.alpha = 0
+        tipControl.alpha = 0
+        halfTotalLabel.alpha = 0
+        thirdTotalLabel.alpha = 0
+        forthTotalLabel.alpha = 0
+        backgroundColorView.alpha = 0
+        peopleLabelCollection.map { $0.alpha = 0 }
     }
 
     override func didReceiveMemoryWarning() {
@@ -29,12 +42,25 @@ class ViewController: UIViewController {
     }
     
     @IBAction func onEditingChange(sender: AnyObject) {
+        self.dollarSignLabel.alpha = 0
+        
+        UIView.animateWithDuration(0.5, animations: { () -> Void in
+            self.tipControl.alpha = 1
+            self.tipLabel.alpha = 1
+            self.totalLabel.alpha = 1
+            self.tipControl.alpha = 1
+            self.halfTotalLabel.alpha = 1
+            self.thirdTotalLabel.alpha = 1
+            self.forthTotalLabel.alpha = 1
+            self.backgroundColorView.alpha = 1
+            self.peopleLabelCollection.map { $0.alpha = 1 }
+        })
+        
         
         let tipPercentages = [0.15, 0.18, 0.2]
         var tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
         
-        var billString = billField.text.stringByTrimmingCharactersInSet(NSCharacterSet.symbolCharacterSet())
-        var billAmount = (billString as NSString).doubleValue
+        var billAmount = (billField.text as NSString).doubleValue
 
         var tip = billAmount * tipPercentage
         var total = billAmount + tip

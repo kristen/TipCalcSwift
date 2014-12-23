@@ -24,8 +24,8 @@
                                     <action selector="onEditingChange:" destination="vXZ-lx-hvc" eventType="valueChanged" id="APf-9b-OXw"/>
                                 </connections>
                             </segmentedControl>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="$" textAlignment="right" minimumFontSize="17" id="DEP-bb-f2Z">
-                                <rect key="frame" x="15" y="78" width="289" height="71"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="17" id="DEP-bb-f2Z">
+                                <rect key="frame" x="16" y="78" width="288" height="71"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="textColor" red="0.0" green="0.50196081399917603" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="60"/>
@@ -67,7 +67,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$0.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="U8e-2P-WnE">
-                                        <rect key="frame" x="83" y="307" width="221" height="36"/>
+                                        <rect key="frame" x="76" y="307" width="228" height="36"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="30"/>
                                         <color key="textColor" red="0.40000000600000002" green="1" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -104,6 +104,13 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.50196081399917603" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bUh-v8-gPY">
+                                <rect key="frame" x="270" y="78" width="34" height="71"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="60"/>
+                                <color key="textColor" red="0.0" green="0.50196081399917603" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="1" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
@@ -113,13 +120,19 @@
                     </view>
                     <navigationItem key="navigationItem" title="Tip Calculator" id="C8N-sg-I2O"/>
                     <connections>
+                        <outlet property="backgroundColorView" destination="PJp-iA-fSy" id="5Y5-o4-OFC"/>
                         <outlet property="billField" destination="DEP-bb-f2Z" id="kJv-SA-A2o"/>
+                        <outlet property="dollarSignLabel" destination="bUh-v8-gPY" id="ARJ-wp-WiL"/>
                         <outlet property="forthTotalLabel" destination="U8e-2P-WnE" id="F7O-l6-Qbm"/>
                         <outlet property="halfTotalLabel" destination="FQG-4H-4CC" id="3u7-9G-VYR"/>
                         <outlet property="thirdTotalLabel" destination="yOR-du-QVW" id="68N-fE-JlA"/>
                         <outlet property="tipControl" destination="og9-Fi-3tm" id="ueM-JC-nfM"/>
                         <outlet property="tipLabel" destination="NH7-3w-Zzd" id="L1Y-ah-fc9"/>
                         <outlet property="totalLabel" destination="I1D-dt-HB1" id="pjN-Mm-7ha"/>
+                        <outletCollection property="peopleLabelCollection" destination="EHV-Mh-j5I" collectionClass="NSMutableArray" id="Pfu-tE-mui"/>
+                        <outletCollection property="peopleLabelCollection" destination="3pT-bf-nLp" collectionClass="NSMutableArray" id="iJt-4B-CLO"/>
+                        <outletCollection property="peopleLabelCollection" destination="P6o-sM-YGY" collectionClass="NSMutableArray" id="ikD-XX-QyK"/>
+                        <outletCollection property="peopleLabelCollection" destination="qAX-18-LAw" collectionClass="NSMutableArray" id="Nzd-HL-KT1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
