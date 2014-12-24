@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
-        <!--Tip Calculator-->
+        <!--Tabber-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="TipCalcSwift" customModuleProvider="target" sceneMemberID="viewController">
@@ -118,7 +118,7 @@
                             <outletCollection property="gestureRecognizers" destination="Se1-te-7ZY" appends="YES" id="GKo-TI-oMe"/>
                         </connections>
                     </view>
-                    <navigationItem key="navigationItem" title="Tip Calculator" id="C8N-sg-I2O"/>
+                    <navigationItem key="navigationItem" title="Tabber" id="C8N-sg-I2O"/>
                     <connections>
                         <outlet property="backgroundColorView" destination="PJp-iA-fSy" id="5Y5-o4-OFC"/>
                         <outlet property="billField" destination="DEP-bb-f2Z" id="kJv-SA-A2o"/>
