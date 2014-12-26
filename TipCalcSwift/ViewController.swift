@@ -24,6 +24,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        navigationController?.navigationBar.barTintColor = UIColor(red: 0/255.0, green: 255/255.0, blue: 128/255.0, alpha: 1.0)
+        
         billField.center = CGPointMake(view.center.x, 188) // billField.frame.size.height //188 // billField.frame.size.height/2 + billField.center.x + 74.5
         tipControl.center = CGPointMake(view.center.x, 249.5)
         dollarSignLabel.center = CGPointMake(dollarSignLabel.center.x, 188)
