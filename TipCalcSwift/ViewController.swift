@@ -85,19 +85,17 @@ class ViewController: UIViewController {
     
     func updateUI() {
         let tipPercentages = [0.15, 0.18, 0.2]
-        var tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
+        let tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
         
-        var billAmount = (billField.text as NSString).doubleValue
+        let billAmount = (billField.text as NSString).doubleValue
+        let tip = billAmount * tipPercentage
+        let total = billAmount + tip
         
-        var tip = billAmount * tipPercentage
-        var total = billAmount + tip
-        let dollarFormat = "$%.2f"
-        
-        tipLabel.text        = String(format: dollarFormat, tip)
-        totalLabel.text      = String(format: dollarFormat, total)
-        halfTotalLabel.text  = String(format: dollarFormat, total / 2)
-        thirdTotalLabel.text = String(format: dollarFormat, total / 3)
-        forthTotalLabel.text = String(format: dollarFormat, total / 4)
+        tipLabel.text        = formatDoubleAsCurrency(tip)
+        totalLabel.text      = formatDoubleAsCurrency(total)
+        halfTotalLabel.text  = formatDoubleAsCurrency(total / 2)
+        thirdTotalLabel.text = formatDoubleAsCurrency(total / 3)
+        forthTotalLabel.text = formatDoubleAsCurrency(total / 4)
     }
     
     func showInputOnly(showInputOnly: Bool) {
@@ -112,6 +110,13 @@ class ViewController: UIViewController {
         forthTotalLabel.alpha = opactiy
         backgroundColorView.alpha = opactiy
         peopleLabelCollection.map { $0.alpha = opactiy }
+    }
+    
+    func formatDoubleAsCurrency(double: Double) -> String? {
+        let formatter = NSNumberFormatter()
+        formatter.numberStyle = NSNumberFormatterStyle.CurrencyStyle
+        formatter.locale = NSLocale.currentLocale()
+        return formatter.stringFromNumber(NSNumber(double: double))
     }
 }
 
