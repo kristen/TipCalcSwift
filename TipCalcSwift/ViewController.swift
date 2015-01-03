@@ -30,12 +30,15 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         navigationController?.navigationBar.barTintColor = UIColor(red: 0/255.0, green: 255/255.0, blue: 128/255.0, alpha: 1.0)
-        
         showInputOnly(true)
     }
     
     override func viewDidAppear(animated: Bool) {
-        setYPositionOfBillFieldAndTipControlFromOriginalYPosition(deltaY)
+        if (billField.text.isEmpty) {
+            setYPositionOfBillFieldAndTipControlFromOriginalYPosition(deltaY)
+        } else {
+            setYPositionOfBillFieldAndTipControlFromOriginalYPosition(0)
+        }
     }
 
     @IBAction func onEditingChange(sender: AnyObject) {
@@ -65,10 +68,8 @@ class ViewController: UIViewController {
             })
             
             UIView.animateWithDuration(duration, delay: delay, options: options, animations: {
-                
                 self.setYPositionOfBillFieldAndTipControlFromOriginalYPosition(self.deltaY)
-                
-                }, completion: nil )
+            }, completion: nil )
             
         } else {
             self.dollarSignLabel.alpha = 0
@@ -79,8 +80,7 @@ class ViewController: UIViewController {
             
             UIView.animateWithDuration(duration, delay: delay, options: options, animations: {
                 self.setYPositionOfBillFieldAndTipControlFromOriginalYPosition(0)
-                
-                }, completion: nil )
+            }, completion: nil )
         }
     }
     
@@ -124,6 +124,12 @@ class ViewController: UIViewController {
         formatter.numberStyle = NSNumberFormatterStyle.CurrencyStyle
         formatter.locale = NSLocale.currentLocale()
         return formatter.stringFromNumber(NSNumber(double: double))
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "Settings") {
+            println("Used settings segue")
+        }
     }
 }
 

@@ -118,7 +118,13 @@
                             <outletCollection property="gestureRecognizers" destination="Se1-te-7ZY" appends="YES" id="GKo-TI-oMe"/>
                         </connections>
                     </view>
-                    <navigationItem key="navigationItem" title="Tabber" id="C8N-sg-I2O"/>
+                    <navigationItem key="navigationItem" title="Tabber" id="C8N-sg-I2O">
+                        <barButtonItem key="rightBarButtonItem" title="Settings" id="INe-2n-wBW">
+                            <connections>
+                                <segue destination="Sjd-uc-MPW" kind="push" identifier="Settings" id="7sY-db-2Us"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="backgroundColorView" destination="PJp-iA-fSy" id="5Y5-o4-OFC"/>
                         <outlet property="billField" destination="DEP-bb-f2Z" id="kJv-SA-A2o"/>
@@ -144,6 +150,21 @@
             </objects>
             <point key="canvasLocation" x="757" y="378"/>
         </scene>
+        <!--Settings-->
+        <scene sceneID="U9o-zi-Fqn">
+            <objects>
+                <viewController id="Sjd-uc-MPW" customClass="SettingsViewController" customModule="TipCalcSwift" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hc0-2P-WIp">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.0" green="1" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Settings" id="3LY-3b-4HV"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GIO-QA-RuH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1167" y="378"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="pvN-At-7bV">
             <objects>
@@ -160,7 +181,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fLg-PR-Z7m" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="245" y="378"/>
+            <point key="canvasLocation" x="355" y="378"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
