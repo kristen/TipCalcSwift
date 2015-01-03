@@ -21,33 +21,44 @@ class ViewController: UIViewController {
     @IBOutlet weak var backgroundColorView: UIView!
     @IBOutlet var peopleLabelCollection: [UILabel]!
     
+    let initialBillFieldY: CGFloat = 106
+    let initialTipControlY: CGFloat = 162.5
+    let deltaY: CGFloat = 100
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
         navigationController?.navigationBar.barTintColor = UIColor(red: 0/255.0, green: 255/255.0, blue: 128/255.0, alpha: 1.0)
         
-        billField.center = CGPointMake(view.center.x, 188) // billField.frame.size.height //188 // billField.frame.size.height/2 + billField.center.x + 74.5
-        tipControl.center = CGPointMake(view.center.x, 249.5)
-        dollarSignLabel.center = CGPointMake(dollarSignLabel.center.x, 188)
-        
         showInputOnly(true)
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        setYPositionOfBillFieldAndTipControlFromOriginalYPosition(deltaY)
+    }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func onEditingChange(sender: AnyObject) {
+        animateBillFieldAndTipControl()
+        calculateAndUpdateUI()
     }
     
-    @IBAction func onEditingChange(sender: AnyObject) {
-        
+    @IBAction func onValueChanged(sender: UISegmentedControl) {
+        view.endEditing(true)
+        animateBillFieldAndTipControl()
+        calculateAndUpdateUI()
+    }
+    
+    @IBAction func onTap(sender: AnyObject) {
+        view.endEditing(true)
+    }
+    
+    func animateBillFieldAndTipControl() {
         let duration = 0.35
-        let delay = 0.0 // delay will be 0.0 seconds (e.g. nothing)
-        let options = UIViewAnimationOptions.CurveEaseInOut // change the timing curve to `ease-in ease-out`
-        
+        let delay = 0.0
+        let options = UIViewAnimationOptions.CurveEaseInOut
         
         if billField.text.isEmpty {
-
             UIView.animateWithDuration(duration, animations: { () -> Void in
                 self.showInputOnly(true)
                 self.dollarSignLabel.alpha = 1
@@ -55,9 +66,7 @@ class ViewController: UIViewController {
             
             UIView.animateWithDuration(duration, delay: delay, options: options, animations: {
                 
-                self.billField.center = CGPointMake(self.view.center.x, 188)
-                self.tipControl.center = CGPointMake(self.view.center.x, 249.5)
-                self.dollarSignLabel.center = CGPointMake(self.dollarSignLabel.center.x, 188)
+                self.setYPositionOfBillFieldAndTipControlFromOriginalYPosition(self.deltaY)
                 
                 }, completion: nil )
             
@@ -69,27 +78,25 @@ class ViewController: UIViewController {
             })
             
             UIView.animateWithDuration(duration, delay: delay, options: options, animations: {
-                self.billField.center = CGPointMake(self.view.center.x, 117)
-                self.tipControl.center = CGPointMake(self.view.center.x, 171.5)
-                self.dollarSignLabel.center = CGPointMake(self.dollarSignLabel.center.x, 117)
+                self.setYPositionOfBillFieldAndTipControlFromOriginalYPosition(0)
                 
                 }, completion: nil )
         }
-        
-        updateUI()
     }
     
-    @IBAction func onTap(sender: AnyObject) {
-        view.endEditing(true)
+    func setYPositionOfBillFieldAndTipControlFromOriginalYPosition(deltaY: CGFloat) {
+        billField.center.y = initialBillFieldY + deltaY
+        tipControl.center.y = initialTipControlY + deltaY
+        dollarSignLabel.center.y = initialBillFieldY + deltaY
     }
     
-    func updateUI() {
-        let tipPercentages = [0.15, 0.18, 0.2]
-        let tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
+    func calculateAndUpdateUI() {
+        var tipPercentages = [0.15, 0.18, 0.2]
+        var tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
         
-        let billAmount = (billField.text as NSString).doubleValue
-        let tip = billAmount * tipPercentage
-        let total = billAmount + tip
+        var billAmount = (billField.text as NSString).doubleValue
+        var tip = billAmount * tipPercentage
+        var total = billAmount + tip
         
         tipLabel.text        = formatDoubleAsCurrency(tip)
         totalLabel.text      = formatDoubleAsCurrency(total)
@@ -113,7 +120,7 @@ class ViewController: UIViewController {
     }
     
     func formatDoubleAsCurrency(double: Double) -> String? {
-        let formatter = NSNumberFormatter()
+        var formatter = NSNumberFormatter()
         formatter.numberStyle = NSNumberFormatterStyle.CurrencyStyle
         formatter.locale = NSLocale.currentLocale()
         return formatter.stringFromNumber(NSNumber(double: double))
