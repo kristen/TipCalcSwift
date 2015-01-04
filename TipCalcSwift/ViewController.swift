@@ -24,6 +24,7 @@ class ViewController: UIViewController {
     let initialBillFieldY: CGFloat = 106
     let initialTipControlY: CGFloat = 162.5
     let deltaY: CGFloat = 100
+    let tipPercentages = [0.15, 0.18, 0.2]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +32,12 @@ class ViewController: UIViewController {
         
         navigationController?.navigationBar.barTintColor = UIColor(red: 0/255.0, green: 255/255.0, blue: 128/255.0, alpha: 1.0)
         showInputOnly(true)
+        
+        tipControl.selectedSegmentIndex = NSUserDefaults.standardUserDefaults().integerForKey("Settings_DefaultTipPercentage")
+        
+        NSNotificationCenter.defaultCenter().addObserverForName(NSUserDefaultsDidChangeNotification, object: nil, queue: nil) { (note) -> Void in
+            self.setTipPercentage()
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -54,6 +61,11 @@ class ViewController: UIViewController {
     
     @IBAction func onTap(sender: AnyObject) {
         view.endEditing(true)
+    }
+    
+    func setTipPercentage() {
+        tipControl.selectedSegmentIndex = NSUserDefaults.standardUserDefaults().integerForKey("Settings_DefaultTipPercentage")
+        calculateAndUpdateUI()
     }
     
     func animateBillFieldAndTipControl() {
@@ -91,7 +103,6 @@ class ViewController: UIViewController {
     }
     
     func calculateAndUpdateUI() {
-        var tipPercentages = [0.15, 0.18, 0.2]
         var tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
         
         var billAmount = (billField.text as NSString).doubleValue
@@ -128,7 +139,8 @@ class ViewController: UIViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "Settings") {
-            println("Used settings segue")
+            let settingsViewController: SettingsViewController = segue.destinationViewController as SettingsViewController
+            settingsViewController.tipPercentages = tipPercentages
         }
     }
 }
