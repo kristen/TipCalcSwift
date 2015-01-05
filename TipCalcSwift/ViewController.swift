@@ -24,7 +24,7 @@ class ViewController: UIViewController {
     let initialBillFieldY: CGFloat = 106
     let initialTipControlY: CGFloat = 162.5
     let deltaY: CGFloat = 100
-    let tipPercentages = [0.15, 0.18, 0.2]
+    var formatter = NSNumberFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,10 +33,16 @@ class ViewController: UIViewController {
         navigationController?.navigationBar.barTintColor = UIColor(red: 0/255.0, green: 255/255.0, blue: 128/255.0, alpha: 1.0)
         showInputOnly(true)
         
-        tipControl.selectedSegmentIndex = NSUserDefaults.standardUserDefaults().integerForKey("Settings_DefaultTipPercentage")
+        var defaults = NSUserDefaults.standardUserDefaults()
+        tipControl.selectedSegmentIndex = defaults.integerForKey("Settings_DefaultTipPercentage")
+        formatter.locale = NSLocale(localeIdentifier: defaults.stringForKey("Settings_DefaultLocale")!)
+        formatter.numberStyle = .CurrencyStyle
+        dollarSignLabel.text = formatter.currencySymbol
         
         NSNotificationCenter.defaultCenter().addObserverForName(NSUserDefaultsDidChangeNotification, object: nil, queue: nil) { (note) -> Void in
-            self.setTipPercentage()
+            self.formatter.locale = NSLocale(localeIdentifier: defaults.stringForKey("Settings_DefaultLocale")!)
+            self.tipControl.selectedSegmentIndex = NSUserDefaults.standardUserDefaults().integerForKey("Settings_DefaultTipPercentage")
+            self.calculateAndUpdateUI()
         }
     }
     
@@ -63,34 +69,23 @@ class ViewController: UIViewController {
         view.endEditing(true)
     }
     
-    func setTipPercentage() {
-        tipControl.selectedSegmentIndex = NSUserDefaults.standardUserDefaults().integerForKey("Settings_DefaultTipPercentage")
-        calculateAndUpdateUI()
-    }
-    
     func animateBillFieldAndTipControl() {
         let duration = 0.35
         let delay = 0.0
         let options = UIViewAnimationOptions.CurveEaseInOut
         
         if billField.text.isEmpty {
-            UIView.animateWithDuration(duration, animations: { () -> Void in
+            UIView.animateWithDuration(duration, delay: delay, options: options, animations: {
                 self.showInputOnly(true)
                 self.dollarSignLabel.alpha = 1
-            })
-            
-            UIView.animateWithDuration(duration, delay: delay, options: options, animations: {
                 self.setYPositionOfBillFieldAndTipControlFromOriginalYPosition(self.deltaY)
             }, completion: nil )
             
         } else {
             self.dollarSignLabel.alpha = 0
             
-            UIView.animateWithDuration(duration, animations: { () -> Void in
-                self.showInputOnly(false)
-            })
-            
             UIView.animateWithDuration(duration, delay: delay, options: options, animations: {
+                self.showInputOnly(false)
                 self.setYPositionOfBillFieldAndTipControlFromOriginalYPosition(0)
             }, completion: nil )
         }
@@ -103,12 +98,14 @@ class ViewController: UIViewController {
     }
     
     func calculateAndUpdateUI() {
+        var tipPercentages = [0.15, 0.18, 0.2]
         var tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
         
         var billAmount = (billField.text as NSString).doubleValue
         var tip = billAmount * tipPercentage
         var total = billAmount + tip
         
+        dollarSignLabel.text = formatter.currencySymbol
         tipLabel.text        = formatDoubleAsCurrency(tip)
         totalLabel.text      = formatDoubleAsCurrency(total)
         halfTotalLabel.text  = formatDoubleAsCurrency(total / 2)
@@ -131,17 +128,7 @@ class ViewController: UIViewController {
     }
     
     func formatDoubleAsCurrency(double: Double) -> String? {
-        var formatter = NSNumberFormatter()
-        formatter.numberStyle = NSNumberFormatterStyle.CurrencyStyle
-        formatter.locale = NSLocale.currentLocale()
         return formatter.stringFromNumber(NSNumber(double: double))
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if (segue.identifier == "Settings") {
-            let settingsViewController: SettingsViewController = segue.destinationViewController as SettingsViewController
-            settingsViewController.tipPercentages = tipPercentages
-        }
     }
 }
 
